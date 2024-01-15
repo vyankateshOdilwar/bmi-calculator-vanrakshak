@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>वनरक्षक भरती</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        text-align: center;
+      }
+
+      .form-container {
+        border: 1px solid #ccc;
+        padding: 20px;
+        margin: 0 auto;
+        width: 400px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .results {
+        margin-top: 20px;
+        font-weight: bold;
+      }
+
+      /* ... (existing styles) */
+
+@media (max-width: 768px) {
+  .form-container {
+    width: 100%;
+    margin: 0 20px;
+  }
+
+  label {
+    display: inline-block;
+    width: 100%;
+  }
+
+  input,
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+
+    </style>
+  </head>
+  <body>
+    <h1>वनरक्षक भरती BMI तपासणी</h1>
+    <div class="form-container">
+      <form>
+        <label for="height">उंची (सेमी)</label>
+        <input type="number" id="height" placeholder="आपली उंची समाविष्ट करा" />
+        <label for="weight">वजन (कि)</label>
+        <input type="number" id="weight" placeholder="आपले वजन समाविष्ट करा" />
+        <button onclick="calculateBMI()">तपासा</button>
+      </form>
+      <div class="results">
+        <p>आपला BMI: <span id="bmi-result"></span></p>
+        <p><span id="interpretation"></span></p>
+      </div>
+    </div>
+    <script>
+      function calculateBMI(even) {
+        event.preventDefault();
+
+        // Get the height and weight values from the input fields
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
+
+        // Check for invalid inputs
+        if (isNaN(height) || isNaN(weight)) {
+          alert("उंची व वजन समाविष्ट करने अनिवार्य!");
+          return;
+        }
+
+        const heightM = height / 100;
+
+        // Calculate the BMI using the formula
+        const bmi = weight / (heightM * heightM);
+
+        // Display the calculated BMI
+        document.getElementById("bmi-result").textContent = bmi.toFixed(2);
+
+        // Provide interpretation based on BMI ranges
+        const interpretation = document.getElementById("interpretation");
+        if (bmi < 18.5) {
+          interpretation.textContent = "कमी वजन";
+          interpretation.style.color = "yellow"
+        } else if (bmi < 25) {
+          interpretation.textContent =
+            "सामान्य - पुढील भरती प्रक्रिये साठी शुभेच्छा!";
+            interpretation.style.color = "green";
+        } else if (bmi < 30) {
+          interpretation.textContent = "जास्त वजन";
+          interpretation.style.color = "orange";
+        } else {
+          interpretation.textContent = "लठ्ठपणा";
+          interpretation.style.color = "red";
+        }
+      }
+    </script>
+  </body>
+</html>
